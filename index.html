@@ -396,25 +396,31 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-1">
                                 <label for="first-name" class="text-xs font-medium text-zinc-700">First name</label>
-                                <input type="text" id="first-name" class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="John">
+                                <input type="text" id="first-name" name="first_name" required class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="John">
                             </div>
                             <div class="space-y-1">
                                 <label for="last-name" class="text-xs font-medium text-zinc-700">Last name</label>
-                                <input type="text" id="last-name" class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="Doe">
+                                <input type="text" id="last-name" name="last_name" required class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="Doe">
                             </div>
                         </div>
                         <div class="space-y-1">
                             <label for="email" class="text-xs font-medium text-zinc-700">Email</label>
-                            <input type="email" id="email" class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="john@example.com">
+                            <input type="email" id="email" name="email" required class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="john@example.com">
+                        </div>
+                        <div class="space-y-1">
+                            <label for="phone" class="text-xs font-medium text-zinc-700">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="+91 98765 43210">
                         </div>
                         <div class="space-y-1">
                             <label for="service-type" class="text-xs font-medium text-zinc-700">Service Required</label>
                             <div class="relative">
-                                <select id="service-type" class="w-full appearance-none rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500">
-                                    <option>General Renovation</option>
-                                    <option>Interior Design</option>
-                                    <option>Civil Construction</option>
-                                    <option>Repair &amp; Maintenance</option>
+                                <select id="service-type" name="service_type" required class="w-full appearance-none rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500">
+                                    <option value="" disabled selected>Select a service</option>
+                                    <option value="General Renovation">General Renovation</option>
+                                    <option value="Interior Design">Interior Design</option>
+                                    <option value="Civil Construction">Civil Construction</option>
+                                    <option value="Repair & Maintenance">Repair & Maintenance</option>
+                                    <option value="Other">Other</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-zinc-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24" data-icon="lucide:chevron-down" data-width="16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"></path></svg>
@@ -423,7 +429,7 @@
                         </div>
                         <div class="space-y-1">
                             <label for="message" class="text-xs font-medium text-zinc-700">Message</label>
-                            <textarea id="message" rows="4" class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="Tell us about your project..."></textarea>
+                            <textarea id="message" name="message" rows="4" required class="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500" placeholder="Tell us about your project..."></textarea>
                         </div>
                         
                         <div class="pt-2">
@@ -496,6 +502,27 @@
                     }
                 });
             });
+        });
+
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            // Simple form validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#ef4444';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+            }
         });
     </script>
 
